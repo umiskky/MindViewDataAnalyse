@@ -1,0 +1,29 @@
+server:
+  port: 18765
+
+spring:
+  datasource:
+    hikari:
+      jdbc-url: jdbc:sqlite:D:\WorkSpace\Idea\MindData\src\main\resources\MindviewKey.db
+      driver-class-name: org.sqlite.JDBC
+
+datasource:
+  path:
+    prefix: D:\WorkSpace\Idea\MindData\src\main\resources\data\
+    suffix: .db
+
+mybatis-plus:
+  global-config:
+    banner: false
+    db-config:
+      id-type: input
+
+logging:
+  file:
+    path: ./logs
+  level:
+    root: info
+
+start:
+  url: http://localhost:18765/swagger-ui/#
+  enabled: true

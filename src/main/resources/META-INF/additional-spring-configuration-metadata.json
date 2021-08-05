@@ -1,0 +1,23 @@
+{
+  "properties": [
+    {
+      "name": "start.url",
+      "type": "java.lang.String",
+      "description": "Description for start.url."
+    },
+    {
+      "name": "start.enabled",
+      "type": "java.lang.Boolean",
+      "description": "Description for start.enabled."
+    },
+    {
+      "name": "datasource.path.prefix",
+      "type": "java.lang.String",
+      "description": "Description for datasource.path.prefix."
+    },
+    {
+      "name": "datasource.path.suffix",
+      "type": "java.lang.String",
+      "description": "Description for datasource.path.suffix."
+    }
+  ] }
