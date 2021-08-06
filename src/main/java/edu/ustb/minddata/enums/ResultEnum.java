@@ -33,7 +33,10 @@ public enum ResultEnum implements StatusInfoInterface {
 
     PERSONNEL_INSERT_UNKNOWN_ERROR(20001, "An unknown error occurred when insert personnel!"),
     PERSONNEL_DELETE_UNKNOWN_ERROR(20002, "An unknown error occurred when delete personnel!"),
-    PERSONNEL_UPDATE_UNKNOWN_ERROR(20003, "An unknown error occurred when update personnel!")
+    PERSONNEL_UPDATE_UNKNOWN_ERROR(20003, "An unknown error occurred when update personnel!"),
+
+    REPORT_NOT_EXIST(30001, "Report not exist!"),
+    REPORT_CORRUPTED(30002, "Report is corrupted!")
     ;
 
     private Integer resultCode;

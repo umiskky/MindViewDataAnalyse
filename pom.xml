@@ -105,6 +105,7 @@
                 <excludes>
                     <exclude>data/**</exclude>
                     <exclude>MindviewKey.db</exclude>
+<!--                    <exclude>application.yml</exclude>-->
                 </excludes>
             </resource>
         </resources>

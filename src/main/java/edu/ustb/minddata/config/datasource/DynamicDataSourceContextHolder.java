@@ -3,14 +3,11 @@ package edu.ustb.minddata.config.datasource;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
 import com.zaxxer.hikari.HikariDataSource;
+import edu.ustb.minddata.config.PathConfig;
 import edu.ustb.minddata.enums.ResultEnum;
 import edu.ustb.minddata.exception.DefinedException;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Set;
@@ -82,34 +79,4 @@ public class DynamicDataSourceContextHolder {
         contextHolder.set("defaultDataSource");
         log.info("Switch data source: -defaultDataSource");
     }
-}
-
-@Data
-@Component
-class PathConfig{
-
-    @Value("${datasource.path.prefix}")
-    private String tmpPrefixPath;
-
-    @Value("${datasource.path.suffix}")
-    private String tmpSuffixPath;
-
-    private static String prefixPath;
-
-    private static String suffixPath;
-
-    @PostConstruct
-    public void setPathConfig(){
-        prefixPath = this.tmpPrefixPath;
-        suffixPath = this.tmpSuffixPath;
-    }
-
-    public static String getPrefixPath(){
-        return prefixPath;
-    }
-
-    public static String getSuffixPath(){
-        return suffixPath;
-    }
-
 }
