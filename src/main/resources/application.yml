@@ -6,10 +6,12 @@ spring:
     hikari:
       jdbc-url: jdbc:sqlite:D:\WorkSpace\Idea\MindData\src\main\resources\MindviewKey.db
       driver-class-name: org.sqlite.JDBC
+#      jdbc-url: jdbc:sqlite:MindviewKey.db
 
 datasource:
   path:
     prefix: D:\WorkSpace\Idea\MindData\src\main\resources\data\
+#    prefix: ./data/
     suffix: .db
 
 mybatis-plus:

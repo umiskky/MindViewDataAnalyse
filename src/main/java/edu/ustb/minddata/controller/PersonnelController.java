@@ -1,7 +1,6 @@
 package edu.ustb.minddata.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import edu.ustb.minddata.config.datasource.DynamicDataSourceContextHolder;
 import edu.ustb.minddata.entity.Personnel;
 import edu.ustb.minddata.entity.reply.PageVO;
 import edu.ustb.minddata.entity.request.PersonnelDTO;

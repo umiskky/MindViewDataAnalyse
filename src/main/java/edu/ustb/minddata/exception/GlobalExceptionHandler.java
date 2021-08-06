@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author UmiSkky
  */
@@ -18,14 +16,14 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(DefinedException.class)
     public ResultBody definedExceptionHandler(DefinedException e){
-        log.warn("[Interface] 请求错误" + e.getResultCode() +": " + e.getResultMsg());
+        log.warn("[Interface] Request error " + e.getResultCode() +": " + e.getResultMsg());
         return ResultBody.error(e);
     }
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResultBody exceptionHandler(Exception e){
-        log.error("[Interface] 服务器错误: " + e);
+        log.error("[Interface] Server error: " + e);
         return ResultBody.error(ResultEnum.INTERNAL_SERVER_ERROR);
     }
 }

@@ -1,9 +1,7 @@
 package edu.ustb.minddata.utils;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import edu.ustb.minddata.entity.Personnel;
 import edu.ustb.minddata.enums.ResultEnum;
-import edu.ustb.minddata.exception.DefinedException;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 

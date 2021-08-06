@@ -3,13 +3,12 @@ package edu.ustb.minddata.service.impl;
 import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import edu.ustb.minddata.entity.Personnel;
-import edu.ustb.minddata.entity.Personnelrecord;
 import edu.ustb.minddata.enums.ResultEnum;
 import edu.ustb.minddata.exception.DefinedException;
 import edu.ustb.minddata.mapper.PersonnelMapper;
 import edu.ustb.minddata.service.PersonnelService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,7 +43,7 @@ public class PersonnelServiceImpl extends ServiceImpl<PersonnelMapper, Personnel
         personnel.setId(IdUtil.randomUUID());
         personnel.setTimestamp(System.currentTimeMillis());
         if(!this.isPersonnelValid(personnel)){
-            log.error("[DataBase] 插入一条被试者信息失败，" + ResultEnum.PERSONNEL_INFO_INCOMPLETE.getResultMsg() + "：\n" + personnel);
+            log.error("[DataBase] Failed to insert a personnel, " + ResultEnum.PERSONNEL_INFO_INCOMPLETE.getResultMsg() + ":\n" + personnel);
             throw new DefinedException(ResultEnum.PERSONNEL_INFO_INCOMPLETE);
         }
 
@@ -53,14 +52,14 @@ public class PersonnelServiceImpl extends ServiceImpl<PersonnelMapper, Personnel
         wrapper.eq("number", personnel.getNumber());
         tmp = personnelMapper.selectOne(wrapper);
         if(tmp != null){
-            log.error("[DataBase] 插入一条被试者信息失败，" + ResultEnum.PERSONNEL_ALREADY_EXIST.getResultMsg() + "：\n" + tmp);
+            log.error("[DataBase] Failed to insert a personnel, " + ResultEnum.PERSONNEL_ALREADY_EXIST.getResultMsg() + ":\n" + tmp);
             throw new DefinedException(ResultEnum.PERSONNEL_ALREADY_EXIST);
         }
-        log.info("[DataBase] 插入一条被试者记录: " + personnel);
+        log.info("[DataBase] Insert a personnel : " + personnel);
 
         int res = personnelMapper.insert(personnel);
         if(res != 1){
-            log.error("[DataBase] 插入被试者失败，" + ResultEnum.PERSONNEL_INSERT_UNKNOWN_ERROR.getResultMsg());
+            log.error("[DataBase] Failed to insert a personnel, " + ResultEnum.PERSONNEL_INSERT_UNKNOWN_ERROR.getResultMsg());
             throw new DefinedException(ResultEnum.PERSONNEL_INSERT_UNKNOWN_ERROR);
         }
         return res;
@@ -72,14 +71,14 @@ public class PersonnelServiceImpl extends ServiceImpl<PersonnelMapper, Personnel
         wrapper.eq("number", number);
         Personnel personnel = personnelMapper.selectOne(wrapper);
         if(personnel == null){
-            log.error("[DataBase] 删除被试者失败，" + ResultEnum.PERSONNEL_NOT_FOUND.getResultMsg());
+            log.error("[DataBase] Failed to delete a personnel, " + ResultEnum.PERSONNEL_NOT_FOUND.getResultMsg());
             throw new DefinedException(ResultEnum.PERSONNEL_NOT_FOUND);
         }else{
             int res = personnelMapper.deleteById(personnel.getId());
             if(res == 1){
-                log.info("[DataBase] 删除被试者：" + personnel);
+                log.info("[DataBase] Delete a personnel:" + personnel);
             }else{
-                log.error("[DataBase] 删除被试者失败，" + ResultEnum.PERSONNEL_DELETE_UNKNOWN_ERROR.getResultMsg());
+                log.error("[DataBase] Failed to delete a personnel, " + ResultEnum.PERSONNEL_DELETE_UNKNOWN_ERROR.getResultMsg());
                 throw new DefinedException(ResultEnum.PERSONNEL_DELETE_UNKNOWN_ERROR);
             }
             return res;
@@ -90,11 +89,11 @@ public class PersonnelServiceImpl extends ServiceImpl<PersonnelMapper, Personnel
     public int updatePersonnel(Personnel personnel) throws Exception {
         Personnel p = personnelMapper.selectById(personnel.getId());
         if(p == null){
-            log.error("[DataBase] 更新被试者失败，" + ResultEnum.PERSONNEL_NOT_FOUND.getResultMsg());
+            log.error("[DataBase] Failed to update a personnel, " + ResultEnum.PERSONNEL_NOT_FOUND.getResultMsg());
             throw new DefinedException(ResultEnum.PERSONNEL_NOT_FOUND);
         }else{
             if(!p.getNumber().equals(personnel.getNumber())){
-                log.error("[DataBase] 更新被试者失败，" + ResultEnum.PERSONNEL_UPDATE_NUMBER_INVALID.getResultMsg());
+                log.error("[DataBase] Failed to update a personnel, " + ResultEnum.PERSONNEL_UPDATE_NUMBER_INVALID.getResultMsg());
                 throw new DefinedException(ResultEnum.PERSONNEL_UPDATE_NUMBER_INVALID);
             }
             p.setAge(personnel.getAge()==null ? p.getAge() : personnel.getAge());
@@ -103,9 +102,9 @@ public class PersonnelServiceImpl extends ServiceImpl<PersonnelMapper, Personnel
             p.setTimestamp(System.currentTimeMillis());
             int res = personnelMapper.updateById(p);
             if(res == 1){
-                log.info("[DataBase] 更新被试者：" + p);
+                log.info("[DataBase] Update a personnel:" + p);
             }else{
-                log.error("[DataBase] 更新被试者失败，" + ResultEnum.PERSONNEL_UPDATE_UNKNOWN_ERROR.getResultMsg());
+                log.error("[DataBase] Failed to update a personnel, " + ResultEnum.PERSONNEL_UPDATE_UNKNOWN_ERROR.getResultMsg());
                 throw new DefinedException(ResultEnum.PERSONNEL_UPDATE_UNKNOWN_ERROR);
             }
             return res;
@@ -118,10 +117,10 @@ public class PersonnelServiceImpl extends ServiceImpl<PersonnelMapper, Personnel
         wrapper.eq("number", number);
         Personnel personnel = personnelMapper.selectOne(wrapper);
         if(personnel == null){
-            log.error("[DataBase] 查询被试者失败，" + ResultEnum.PERSONNEL_NOT_FOUND.getResultMsg());
+            log.error("[DataBase] Failed to query a personnel, " + ResultEnum.PERSONNEL_NOT_FOUND.getResultMsg());
             throw new DefinedException(ResultEnum.PERSONNEL_NOT_FOUND);
         }else{
-            log.info("[DataBase] 查询被试者：" + personnel);
+            log.info("[DataBase] Query a personnel:" + personnel);
             return personnel;
         }
     }
@@ -138,7 +137,7 @@ public class PersonnelServiceImpl extends ServiceImpl<PersonnelMapper, Personnel
             if(this.isPersonnelValid(personnel)){
                 break;
             }else{
-                log.error("[DataBase] 批量插入更新被试者失败，被试者信息不完整：\n" + personnel);
+                log.error("[DataBase] Failed to insert or update personnel in batch, since personnel's information is incomplete: \n" + personnel);
                 throw new DefinedException(ResultEnum.PERSONNEL_INFO_INCOMPLETE);
             }
         }
@@ -154,18 +153,18 @@ public class PersonnelServiceImpl extends ServiceImpl<PersonnelMapper, Personnel
             // 补全信息
             personnel.setTimestamp(System.currentTimeMillis());
 
-            // 记录不存在，执行插入
+            // 记录不存在,执行插入
             if(tmp == null){
                 personnel.setId(IdUtil.randomUUID());
                 int res = personnelMapper.insert(personnel);
                 if(res == 1){
                     insertCount ++;
                 }else if(res == 0){
-                    log.error("[DataBase] 批量插入更新失败（插入）：" + personnel);
+                    log.error("[DataBase] An error occurred when insert personnel in batch: " + personnel);
                     errorCount ++;
                 }
             }
-            // 记录存在，执行更新
+            // 记录存在,执行更新
             else{
                 tmp.setNumber(personnel.getNumber());
                 tmp.setAge(personnel.getAge());
@@ -176,26 +175,26 @@ public class PersonnelServiceImpl extends ServiceImpl<PersonnelMapper, Personnel
                 if(res == 1){
                     updateCount ++;
                 }else if(res == 0){
-                    log.error("[DataBase] 批量插入更新失败（更新）：" + tmp);
+                    log.error("[DataBase] An error occurred when update personnel in batch: " + tmp);
                     errorCount ++;
                 }
             }
         }
 
-        log.info("[DataBase] 批量插入更新被试者记录： "
-                + " 总数："
+        log.info("[DataBase] Insert or update personnel in batch: "
+                + " total: "
                 + personnelList.size()
-                + " 成功："
+                + " success: "
                 + (insertCount + updateCount)
-                + " 错误："
+                + " error: "
                 + errorCount
-                + " 插入数："
+                + " insert: "
                 + insertCount
-                + " 更新数："
+                + " update: "
                 + updateCount);
 
         if(insertCount + updateCount != personnelList.size()){
-            log.error("[DataBase] 批量插入或更新出现错误，" + ResultEnum.PERSONNEL_INSERT_UPDATE_PART.getResultMsg());
+            log.error("[DataBase] An error occurred when insert or update personnel in batch," + ResultEnum.PERSONNEL_INSERT_UPDATE_PART.getResultMsg());
             throw new DefinedException(ResultEnum.PERSONNEL_INSERT_UPDATE_PART);
         }
         return insertCount + updateCount;
@@ -209,7 +208,7 @@ public class PersonnelServiceImpl extends ServiceImpl<PersonnelMapper, Personnel
             if(this.isPersonnelValid(personnel)){
                 break;
             }else{
-                log.error("[DataBase] 批量插入被试者失败，被试者信息不完整：\n" + personnel);
+                log.error("[DataBase] Failed to insert personnel in batch, since personnel's information is incomplete:\n" + personnel);
                 throw new DefinedException(ResultEnum.PERSONNEL_INFO_INCOMPLETE);
             }
         }
@@ -229,15 +228,15 @@ public class PersonnelServiceImpl extends ServiceImpl<PersonnelMapper, Personnel
         }
         if(res != personnelList.size()){
             if(alreadyExistError + res == personnelList.size()){
-                log.info("插入被试者记录： "
-                        + " 总数："
+                log.info("Insert personnel in batch: "
+                        + " total:"
                         + personnelList.size()
-                        + " 成功："
+                        + " success:"
                         + res
-                        + " 已存在记录："
+                        + " exist:"
                         + alreadyExistError);
             }else{
-                log.error("[DataBase] 批量插入被试者失败，" + ResultEnum.PERSONNEL_INSERT_UNKNOWN_ERROR.getResultMsg());
+                log.error("[DataBase] Failed to insert personnel in batch" + ResultEnum.PERSONNEL_INSERT_UNKNOWN_ERROR.getResultMsg());
                 throw new DefinedException(ResultEnum.PERSONNEL_INSERT_UNKNOWN_ERROR);
             }
         }
@@ -256,33 +255,33 @@ public class PersonnelServiceImpl extends ServiceImpl<PersonnelMapper, Personnel
             Personnel personnel = personnelMapper.selectOne(wrapper);
             if(personnel == null){
                 nonexistenceCount ++;
-                log.error("[DataBase] 批量删除被试者出错，" + ResultEnum.PERSONNEL_NOT_FOUND.getResultMsg() + "，编号：" + number);
+                log.error("[DataBase] An error occurred when delete personnel in batch, " + ResultEnum.PERSONNEL_NOT_FOUND.getResultMsg() + ",编号:" + number);
             }else{
                 int tmp = personnelMapper.deleteById(personnel.getId());
                 if(tmp == 1){
                     deleteCount ++;
-                    log.info("[DataBase] 删除被试者：" + personnel);
+                    log.info("[DataBase] Delete a personnel:" + personnel);
                 }else if(tmp == 0){
                     unknownCount ++;
-                    log.error("[DataBase] 批量删除被试者出错，" + ResultEnum.PERSONNEL_DELETE_UNKNOWN_ERROR.getResultMsg() + "，编号：" + number);
+                    log.error("[DataBase] An error occurred when delete a personnel, " + ResultEnum.PERSONNEL_DELETE_UNKNOWN_ERROR.getResultMsg() + ",编号:" + number);
                 }
             }
         }
 
-        log.info("[DataBase] 批量删除被试者记录： "
-                + " 总数："
+        log.info("[DataBase] Delete personnel in batch: "
+                + " total: "
                 + numbers.size()
-                + " 成功："
+                + " success: "
                 + deleteCount
-                + " 错误："
+                + " error: "
                 + (nonexistenceCount + unknownCount)
-                + " 不存在数："
+                + " not found: "
                 + nonexistenceCount
-                + " 未知错误数："
+                + " unknown: "
                 + unknownCount);
 
         if(deleteCount != numbers.size()){
-            log.error("[DataBase] 批量删除出现出错，" + ResultEnum.PERSONNEL_DELETE_PART.getResultMsg());
+            log.error("[DataBase] An error occurred when delete personnel in batch, " + ResultEnum.PERSONNEL_DELETE_PART.getResultMsg());
             throw new DefinedException(ResultEnum.PERSONNEL_DELETE_PART);
         }
         return deleteCount;

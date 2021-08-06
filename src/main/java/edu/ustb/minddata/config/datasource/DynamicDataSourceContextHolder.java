@@ -44,14 +44,14 @@ public class DynamicDataSourceContextHolder {
             Map<Object, Object> dynamicTargetDataSources = DynamicDataSource.dynamicTargetDataSources;
             Set<Object> keySet = dynamicTargetDataSources.keySet();
             if (!keySet.contains(key)) {
-                String path = String.valueOf(Paths.get("" + PathConfig.getPrefixPath(), key + PathConfig.getSuffixPath()));
+                String path = String.valueOf(Paths.get("" + PathConfig.getPrefixPath(), key + PathConfig.getSuffixPath()).toAbsolutePath());
                 if(FileUtil.isFile(path)){
                     String absolutePath = FileUtil.file(path).getAbsolutePath();
                     HikariDataSource dataSource = new HikariDataSource();
                     dataSource.setJdbcUrl(DB_URL_HEAD + absolutePath);
                     dataSource.setDriverClassName(JDBC_DRIVER);
                     dynamicDataSource.addTargetDataSources(key, dataSource);
-                    log.info("添加数据源：" + absolutePath);
+                    log.info("Add data source: " + absolutePath);
                 }else{
                     log.error(ResultEnum.DATASOURCE_CREATE_ERROR.getResultMsg() + ": " + key);
                     throw new DefinedException(ResultEnum.DATASOURCE_CREATE_ERROR);
@@ -59,7 +59,7 @@ public class DynamicDataSourceContextHolder {
             }
             if(keySet.contains(key)){
                 contextHolder.set(key);
-                log.info("切换数据源：-" + key);
+                log.info("Switch data source: -" + key);
             }else{
                 log.error(ResultEnum.DATASOURCE_SWITCH_ERROR.getResultMsg() + ": " + key);
                 throw new DefinedException(ResultEnum.DATASOURCE_SWITCH_ERROR);
@@ -80,7 +80,7 @@ public class DynamicDataSourceContextHolder {
     public static void clearDataSourceKey() {
         contextHolder.remove();
         contextHolder.set("defaultDataSource");
-        log.info("切换数据源：-defaultDataSource");
+        log.info("Switch data source: -defaultDataSource");
     }
 }
 
@@ -111,4 +111,5 @@ class PathConfig{
     public static String getSuffixPath(){
         return suffixPath;
     }
+
 }

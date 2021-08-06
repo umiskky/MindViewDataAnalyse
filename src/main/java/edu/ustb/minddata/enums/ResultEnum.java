@@ -14,27 +14,26 @@ public enum ResultEnum implements StatusInfoInterface {
     /**
      *
      */
-    TEST(-1,"测试"),
-    SUCCESS(200, "成功!"),
-    BODY_NOT_MATCH(400,"请求的数据格式不符!"),
-    SIGNATURE_NOT_MATCH(401,"请求的数字签名不匹配!"),
-    NOT_FOUND(404, "未找到该资源!"),
-    INTERNAL_SERVER_ERROR(500, "服务器内部错误!"),
-    SERVER_BUSY(503,"服务器正忙，请稍后再试!"),
+    TEST(-1,"Test!"),
+    SUCCESS(200, "Success!"),
+    BODY_NOT_MATCH(400,"The requested data format is inconsistent!"),
+    NOT_FOUND(404, "Resource not found!"),
+    INTERNAL_SERVER_ERROR(500, "Server internal error!"),
+    SERVER_BUSY(503,"The server is busy, please try again later!"),
 
-    DATASOURCE_CREATE_ERROR(1001, "添加数据源失败"),
-    DATASOURCE_SWITCH_ERROR(1002, "切换数据源失败"),
+    DATASOURCE_CREATE_ERROR(1001, "Failed to add a data source!"),
+    DATASOURCE_SWITCH_ERROR(1002, "Failed to switch a data source!"),
 
-    PERSONNEL_INFO_INCOMPLETE(10001, "被试者信息不完整"),
-    PERSONNEL_NOT_FOUND(10003, "未找到对应被试者信息"),
-    PERSONNEL_ALREADY_EXIST(10004, "插入的被试者信息已存在"),
-    PERSONNEL_INSERT_UPDATE_PART(10005, "批量插入或更新被试者部分成功"),
-    PERSONNEL_DELETE_PART(10006, "批量删除被试者部分成功"),
-    PERSONNEL_UPDATE_NUMBER_INVALID(10007, "编号与id不匹配，不能修改编号"),
+    PERSONNEL_INFO_INCOMPLETE(10001, "Personnel's information is incomplete!"),
+    PERSONNEL_NOT_FOUND(10003, "Personnel not found!"),
+    PERSONNEL_ALREADY_EXIST(10004, "Personnel already exist!"),
+    PERSONNEL_INSERT_UPDATE_PART(10005, "Insert or delete personnel in batch success partly!"),
+    PERSONNEL_DELETE_PART(10006, "Delete personnel in batch success partly!"),
+    PERSONNEL_UPDATE_NUMBER_INVALID(10007, "The number does not match the ID, the number can not be changed!"),
 
-    PERSONNEL_INSERT_UNKNOWN_ERROR(20001, "插入数据出现未知错误"),
-    PERSONNEL_DELETE_UNKNOWN_ERROR(20002, "删除数据出现未知错误"),
-    PERSONNEL_UPDATE_UNKNOWN_ERROR(20003, "更新数据出现未知错误")
+    PERSONNEL_INSERT_UNKNOWN_ERROR(20001, "An unknown error occurred when insert personnel!"),
+    PERSONNEL_DELETE_UNKNOWN_ERROR(20002, "An unknown error occurred when delete personnel!"),
+    PERSONNEL_UPDATE_UNKNOWN_ERROR(20003, "An unknown error occurred when update personnel!")
     ;
 
     private Integer resultCode;

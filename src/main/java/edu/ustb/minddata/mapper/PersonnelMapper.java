@@ -1,7 +1,7 @@
 package edu.ustb.minddata.mapper;
 
-import edu.ustb.minddata.entity.Personnel;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import edu.ustb.minddata.entity.Personnel;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

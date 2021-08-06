@@ -1,8 +1,8 @@
 package edu.ustb.minddata.advice;
 
 import cn.hutool.core.util.StrUtil;
-import edu.ustb.minddata.utils.LogUtil;
 import edu.ustb.minddata.config.datasource.DynamicDataSourceContextHolder;
+import edu.ustb.minddata.utils.LogUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;

@@ -97,6 +97,17 @@
                 </configuration>
             </plugin>
         </plugins>
+
+        <resources>
+            <resource>
+                <filtering>true</filtering>
+                <directory>src/main/resources</directory>
+                <excludes>
+                    <exclude>data/**</exclude>
+                    <exclude>MindviewKey.db</exclude>
+                </excludes>
+            </resource>
+        </resources>
     </build>
 
 </project>

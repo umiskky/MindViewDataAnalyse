@@ -1,9 +1,8 @@
 package edu.ustb.minddata.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import edu.ustb.minddata.entity.Personnel;
 import com.baomidou.mybatisplus.extension.service.IService;
-import edu.ustb.minddata.entity.Personnelrecord;
+import edu.ustb.minddata.entity.Personnel;
 
 import java.util.List;
 

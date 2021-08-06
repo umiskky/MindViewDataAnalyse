@@ -22,12 +22,12 @@ public class CommandRunnerConfig implements CommandLineRunner {
     @Override
     public void run(String... args) {
         if (isEnabled) {
-            log.info("自动加载指定的页面");
+            log.info("Automatically loads the specified page");
             try {
                 Runtime.getRuntime().exec("cmd /c start " + startUrl);
             } catch (Exception ex) {
                 ex.printStackTrace();
-                log.error("浏览器打开页面异常");
+                log.error("The browser fails to open the page");
             }
         }
     }

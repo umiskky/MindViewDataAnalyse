@@ -1,7 +1,6 @@
 package edu.ustb.minddata.config.datasource;
 
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
-import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
