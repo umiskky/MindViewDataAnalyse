@@ -1,6 +1,5 @@
 package edu.ustb.minddata.controller;
 
-import edu.ustb.minddata.entity.reply.PageVO;
 import edu.ustb.minddata.exception.ResultBody;
 import edu.ustb.minddata.service.ReportService;
 import lombok.extern.slf4j.Slf4j;

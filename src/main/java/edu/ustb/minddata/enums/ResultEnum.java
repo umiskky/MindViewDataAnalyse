@@ -36,7 +36,14 @@ public enum ResultEnum implements StatusInfoInterface {
     PERSONNEL_UPDATE_UNKNOWN_ERROR(20003, "An unknown error occurred when update personnel!"),
 
     REPORT_NOT_EXIST(30001, "Report not exist!"),
-    REPORT_CORRUPTED(30002, "Report is corrupted!")
+    REPORT_CORRUPTED(30002, "Report is corrupted!"),
+
+    FILE_UPLOAD_TYPE_NOT_MATCHED(40001, "File type incorrect!"),
+    FILE_UPLOAD_FAILED(40002, "File upload failed with an unknown error!"),
+    FILE_UPLOAD_NOT_FOUND(40003, "File is not found in upload buffer!"),
+
+    TABLE_HEAD_REDUNDANT(50001, "Table head may have redundant fields!"),
+    TABLE_HEAD_NOT_INITIALIZE(50002, "Table head miss some required fields! Required:[number, gender, age, name]！")
     ;
 
     private Integer resultCode;

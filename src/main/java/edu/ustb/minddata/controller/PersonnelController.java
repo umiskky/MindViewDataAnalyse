@@ -5,11 +5,13 @@ import edu.ustb.minddata.entity.Personnel;
 import edu.ustb.minddata.entity.reply.PageVO;
 import edu.ustb.minddata.entity.request.PersonnelDTO;
 import edu.ustb.minddata.exception.ResultBody;
+import edu.ustb.minddata.service.PersonnelExcelService;
 import edu.ustb.minddata.service.PersonnelService;
 import edu.ustb.minddata.utils.PageUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +26,12 @@ public class PersonnelController {
 
     private final PersonnelService personnelService;
 
+    private final PersonnelExcelService personnelExcelService;
+
     @Autowired
-    public PersonnelController(PersonnelService personnelService) {
+    public PersonnelController(PersonnelService personnelService, PersonnelExcelService personnelExcelService) {
         this.personnelService = personnelService;
+        this.personnelExcelService = personnelExcelService;
     }
 
     //========================================================================================
@@ -69,4 +74,17 @@ public class PersonnelController {
         personnelService.queryAllPersonnel(page);
         return ResultBody.success(new PageVO<>(page));
     }
+
+    //========================================================================================
+
+    @PostMapping(value = "/personnel/upload")
+    public ResultBody uploadExcelFile(@RequestPart MultipartFile multipartFile) throws Exception{
+        return ResultBody.success(personnelExcelService.uploadExcelFile(multipartFile));
+    }
+
+    @PostMapping("/personnel/multi")
+    public ResultBody addMultiPersonnelByExcelFileName(@RequestParam String excelFileName) throws Exception{
+        return ResultBody.success(personnelExcelService.insertPersonnelByExcelFile(excelFileName));
+    }
+
 }

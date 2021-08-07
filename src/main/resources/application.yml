@@ -29,3 +29,4 @@ logging:
 start:
   url: http://localhost:18765/swagger-ui/#
   enabled: true
+  buffer: ./buffer

@@ -36,9 +36,9 @@ public class Personnelrecord implements Serializable {
 
     private Integer tag;
 
-    private Integer unixstart;
+    private Long unixstart;
 
-    private Integer unixend;
+    private Long unixend;
 
 
 }
