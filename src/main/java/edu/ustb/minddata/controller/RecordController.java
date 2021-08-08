@@ -41,12 +41,21 @@ public class RecordController {
     }
 
     @GetMapping("/record/personnel")
-    public ResultBody getPersonnelRecordByPid(@RequestParam String pid,
-                                              @RequestParam(required = false, defaultValue = "1") String pageIndex,
-                                              @RequestParam(required = false, defaultValue = "10") String pageSize) throws Exception{
+    public ResultBody getPersonnelRecord(@RequestParam(required = false, defaultValue = "1") String pageIndex,
+                                         @RequestParam(required = false, defaultValue = "10") String pageSize) throws Exception{
         Page<Personnelrecord> page= new PageUtil<Personnelrecord>(pageIndex, pageSize).getPage();
-        personnelRecordService.queryPersonnelRecordByPid(page, pid);
+        personnelRecordService.queryPersonnelRecord(page);
         return ResultBody.success(new PageVO<>(page));
+    }
+
+    @GetMapping("/record/personnel/pid")
+    public ResultBody getAllPersonnelRecordByPid(@RequestParam String pid) throws Exception{
+        return ResultBody.success(personnelRecordService.queryPersonnelRecordByPid(pid));
+    }
+
+    @GetMapping("/record/personnel/number")
+    public ResultBody getAllPersonnelRecordByNumber(@RequestParam String number) throws Exception{
+        return ResultBody.success(personnelRecordService.queryPersonnelRecordByNumber(number));
     }
 
     @GetMapping("/record/time")

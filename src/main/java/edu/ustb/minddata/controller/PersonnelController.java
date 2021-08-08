@@ -51,6 +51,22 @@ public class PersonnelController {
         return ResultBody.success(personnelService.updatePersonnel(personnel));
     }
 
+    @GetMapping("/personnel/number")
+    public ResultBody queryPersonnelByNumber(@RequestParam String number) throws Exception{
+        return ResultBody.success(personnelService.queryPersonnelByNumber(number));
+    }
+
+    /**
+     * TODO 谨慎使用该接口，效率非常低
+     * @param name 姓名
+     * @return ResultBody
+     * @throws Exception 异常
+     */
+    @GetMapping("/personnel/name")
+    public ResultBody queryPersonnelByName(@RequestParam String name) throws Exception{
+        return ResultBody.success(personnelService.queryPersonnelByName(name));
+    }
+
     //========================================================================================
 
     @PutMapping("/personnel/multi")

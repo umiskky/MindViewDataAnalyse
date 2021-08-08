@@ -1,9 +1,12 @@
 package edu.ustb.minddata.service.impl;
 
 import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.ustb.minddata.entity.Personnel;
 import edu.ustb.minddata.enums.ResultEnum;
 import edu.ustb.minddata.exception.DefinedException;
@@ -13,7 +16,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -47,10 +52,9 @@ public class PersonnelServiceImpl extends ServiceImpl<PersonnelMapper, Personnel
             throw new DefinedException(ResultEnum.PERSONNEL_INFO_INCOMPLETE);
         }
 
-        Personnel tmp = null;
         QueryWrapper<Personnel> wrapper = new QueryWrapper<>();
         wrapper.eq("number", personnel.getNumber());
-        tmp = personnelMapper.selectOne(wrapper);
+        Personnel tmp = personnelMapper.selectOne(wrapper);
         if(tmp != null){
             log.error("[DataBase] Failed to insert a personnel, " + ResultEnum.PERSONNEL_ALREADY_EXIST.getResultMsg() + ":\n" + tmp);
             throw new DefinedException(ResultEnum.PERSONNEL_ALREADY_EXIST);
@@ -123,6 +127,39 @@ public class PersonnelServiceImpl extends ServiceImpl<PersonnelMapper, Personnel
             log.info("[DataBase] Query a personnel:" + personnel);
             return personnel;
         }
+    }
+
+    @Override
+    public List<Personnel> queryPersonnelByName(String name) throws Exception {
+        List<Personnel> personnelList = new ArrayList<>();
+
+        // 参数校验
+        if(StrUtil.isEmpty(name)){
+            log.error("[DataBase] " + ResultEnum.BODY_NOT_MATCH.getResultMsg() + " name=" + name);
+            throw new DefinedException(ResultEnum.BODY_NOT_MATCH);
+        }
+
+        // 进行模糊查询
+        QueryWrapper<Personnel> wrapper = new QueryWrapper<>();
+        wrapper.like("nature", name);
+
+        // 筛选符合条件结果
+        ObjectMapper objectMapper = new ObjectMapper();
+        for (Personnel personnel : personnelMapper.selectList(wrapper)) {
+            Map<String, String> map = objectMapper.readValue(personnel.getNature(), new TypeReference<Map<String,String>>(){});
+            String tmp = map.get("name");
+            if(!StrUtil.isEmpty(tmp) && name.equals(tmp)){
+                personnelList.add(personnel);
+            }
+        }
+
+        if(personnelList.size()==0){
+            log.error("[DataBase] Failed to query personnel, " + ResultEnum.PERSONNEL_NOT_FOUND.getResultMsg());
+            throw new DefinedException(ResultEnum.PERSONNEL_NOT_FOUND);
+        }
+        // 输出日志
+        log.info("[DataBase] Query personnel: \n" + personnelList);
+        return personnelList;
     }
 
     //========================================================================================

@@ -50,6 +50,14 @@ public interface PersonnelService extends IService<Personnel> {
      */
     Personnel queryPersonnelByNumber(String number) throws Exception;
 
+    /**
+     * 根据姓名查询Personnel
+     * @param name 姓名
+     * @return List<Personnel>
+     * @throws Exception 异常
+     */
+    List<Personnel> queryPersonnelByName(String name) throws Exception;
+
     //========================================================================================
 
     /**

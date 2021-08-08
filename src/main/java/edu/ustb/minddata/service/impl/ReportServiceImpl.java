@@ -33,10 +33,10 @@ public class ReportServiceImpl implements ReportService {
         String absolutePath = String.valueOf(Paths.get(PathConfig.getPrefixPath(), rid).toAbsolutePath());
         File file = new File(absolutePath);
         if(!FileUtil.isDirectory(file)){
-            log.error("Query report url error: " + ResultEnum.REPORT_NOT_EXIST.getResultMsg() + " rid=" + rid);
+            log.error("[File] " + "Query report url error: " + ResultEnum.REPORT_NOT_EXIST.getResultMsg() + " rid=" + rid);
             throw new DefinedException(ResultEnum.REPORT_NOT_EXIST);
         }else if(FileUtil.isDirEmpty(file)){
-            log.error("Query report url error: " + ResultEnum.REPORT_CORRUPTED.getResultMsg() + " rid=" + rid);
+            log.error("[File] " + "Query report url error: " + ResultEnum.REPORT_CORRUPTED.getResultMsg() + " rid=" + rid);
             throw new DefinedException(ResultEnum.REPORT_CORRUPTED);
         }else{
             for (File l : FileUtil.ls(absolutePath)) {
@@ -45,11 +45,11 @@ public class ReportServiceImpl implements ReportService {
                 }
             }
             if(urlList.size() == 0){
-                log.error("Query report url error: " + ResultEnum.REPORT_CORRUPTED.getResultMsg() + " rid=" + rid);
+                log.error("[File] " + "Query report url error: " + ResultEnum.REPORT_CORRUPTED.getResultMsg() + " rid=" + rid);
                 throw new DefinedException(ResultEnum.REPORT_CORRUPTED);
             }
         }
-        log.info("Query report url: rid=" + rid + "url: " + urlList);
+        log.info("[File] " + "Query report url: rid=" + rid + "url: " + urlList);
         return urlList;
     }
 }
