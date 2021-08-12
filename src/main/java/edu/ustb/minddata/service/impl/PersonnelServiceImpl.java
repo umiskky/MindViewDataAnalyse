@@ -130,6 +130,20 @@ public class PersonnelServiceImpl extends ServiceImpl<PersonnelMapper, Personnel
     }
 
     @Override
+    public List<Personnel> queryPersonnelByNumberFuzzy(String number) throws Exception {
+        QueryWrapper<Personnel> wrapper = new QueryWrapper<>();
+        wrapper.like("number", number);
+        List<Personnel> personnelList = personnelMapper.selectList(wrapper);
+        if(personnelList.size()==0){
+            log.error("[DataBase] Failed to query a personnel, " + ResultEnum.PERSONNEL_NOT_FOUND.getResultMsg());
+            throw new DefinedException(ResultEnum.PERSONNEL_NOT_FOUND);
+        }else{
+            log.info("[DataBase] Query personnel:" + personnelList);
+            return personnelList;
+        }
+    }
+
+    @Override
     public List<Personnel> queryPersonnelByName(String name) throws Exception {
         List<Personnel> personnelList = new ArrayList<>();
 

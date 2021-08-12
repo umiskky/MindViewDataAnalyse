@@ -56,6 +56,11 @@ public class PersonnelController {
         return ResultBody.success(personnelService.queryPersonnelByNumber(number));
     }
 
+    @GetMapping("/personnel/number/fuzzy")
+    public ResultBody queryPersonnelByNumberFuzzy(@RequestParam String number) throws Exception{
+        return ResultBody.success(personnelService.queryPersonnelByNumberFuzzy(number));
+    }
+
     /**
      * TODO 谨慎使用该接口，效率非常低
      * @param name 姓名

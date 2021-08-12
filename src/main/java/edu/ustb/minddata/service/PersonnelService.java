@@ -51,6 +51,14 @@ public interface PersonnelService extends IService<Personnel> {
     Personnel queryPersonnelByNumber(String number) throws Exception;
 
     /**
+     * 根据编号模糊查询Personnel
+     * @param number  编号
+     * @return List<Personnel>
+     * @throws Exception 异常
+     */
+    List<Personnel> queryPersonnelByNumberFuzzy(String number) throws Exception;
+
+    /**
      * 根据姓名查询Personnel
      * @param name 姓名
      * @return List<Personnel>
