@@ -79,4 +79,16 @@ public class DynamicDataSourceContextHolder {
         contextHolder.set("defaultDataSource");
         log.info("Switch data source: -defaultDataSource");
     }
+
+    /**
+     * 重置数据源
+     */
+    public static void clearDataSourceKey(String rid) {
+        try {
+            DynamicDataSource.dynamicTargetDataSources.remove(rid);
+        }catch (Exception ignored){}
+        contextHolder.remove();
+        contextHolder.set("defaultDataSource");
+        log.info("Switch data source: -defaultDataSource");
+    }
 }

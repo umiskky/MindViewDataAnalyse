@@ -55,7 +55,7 @@ public class ControllerAopAdvice {
         if(!StrUtil.isEmpty(rid)){
             DynamicDataSourceContextHolder.setDataSourceKey(rid);
             proceed = proceedingJoinPoint.proceed();
-            DynamicDataSourceContextHolder.clearDataSourceKey();
+            DynamicDataSourceContextHolder.clearDataSourceKey(rid);
         }
         return proceed;
     }

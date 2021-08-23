@@ -72,6 +72,11 @@ public class PersonnelController {
         return ResultBody.success(personnelService.queryPersonnelByName(name));
     }
 
+    @GetMapping("/personnel")
+    public ResultBody queryPersonnelById(@RequestParam String pid) throws Exception{
+        return ResultBody.success(personnelService.queryPersonnelById(pid));
+    }
+
     //========================================================================================
 
     @PutMapping("/personnel/multi")

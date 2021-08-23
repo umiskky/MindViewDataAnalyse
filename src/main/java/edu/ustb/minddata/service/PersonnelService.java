@@ -66,6 +66,13 @@ public interface PersonnelService extends IService<Personnel> {
      */
     List<Personnel> queryPersonnelByName(String name) throws Exception;
 
+    /**
+     * 根据pid查询Personnel
+     * @param pid 受试者id
+     * @return Personnel
+     * @throws Exception 异常
+     */
+    Personnel queryPersonnelById(String pid) throws Exception;
     //========================================================================================
 
     /**

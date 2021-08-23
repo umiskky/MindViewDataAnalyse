@@ -176,6 +176,18 @@ public class PersonnelServiceImpl extends ServiceImpl<PersonnelMapper, Personnel
         return personnelList;
     }
 
+    @Override
+    public Personnel queryPersonnelById(String pid) throws Exception {
+        Personnel personnel = personnelMapper.selectById(pid);
+        if(personnel==null){
+            log.error("[DataBase] Failed to query a personnel, " + ResultEnum.PERSONNEL_NOT_FOUND.getResultMsg());
+            throw new DefinedException(ResultEnum.PERSONNEL_NOT_FOUND);
+        }else{
+            log.info("[DataBase] Query personnel:" + personnel);
+            return personnel;
+        }
+    }
+
     //========================================================================================
     // 批量数据的增删改查
     //========================================================================================
