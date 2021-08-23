@@ -1,9 +1,11 @@
 package edu.ustb.minddata.service.impl;
 
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import edu.ustb.minddata.config.PathConfig;
 import edu.ustb.minddata.entity.Personnel;
 import edu.ustb.minddata.entity.Personnelrecord;
 import edu.ustb.minddata.enums.ResultEnum;
@@ -15,6 +17,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.nio.file.Paths;
 import java.util.List;
 
 /**
@@ -43,6 +47,41 @@ public class PersonnelrecordServiceImpl extends ServiceImpl<PersonnelrecordMappe
     @Override
     public void queryPersonnelRecord(IPage<Personnelrecord> page) throws Exception{
         personnelrecordMapper.selectPage(page, null);
+    }
+
+    @Override
+    public int deletePersonnelRecordByRid(String rid) throws Exception {
+        int res = personnelrecordMapper.deleteById(rid);
+        if(res==1){
+            log.info("[Database] Delete personnel record: " + rid);
+        }
+        return res;
+    }
+
+    @Override
+    public int deletePersonnelRecordDataByRid(String rid) throws Exception {
+        File dbFile = Paths.get(PathConfig.getPrefixPath(), (rid + ".db")).toAbsolutePath().toFile();
+        File txtFile = Paths.get(PathConfig.getPrefixPath(), (rid + ".txt")).toAbsolutePath().toFile();
+        int res = 0;
+
+        if(FileUtil.isFile(dbFile)){
+            System.gc();
+            boolean tmp = FileUtil.del(dbFile);
+            if(tmp){
+                log.info("[File] Delete database file: " + dbFile.getAbsolutePath());
+            }
+            res += tmp ? 1 : 0;
+        }
+
+        if(FileUtil.isFile(txtFile)){
+            System.gc();
+            boolean tmp = FileUtil.del(txtFile);
+            if(tmp){
+                log.info("[File] Delete txt file(data buffer): " + txtFile.getAbsolutePath());
+            }
+            res += tmp ? 1 : 0;
+        }
+        return res;
     }
 
     @Override

@@ -52,4 +52,19 @@ public class ReportServiceImpl implements ReportService {
         log.info("[File] " + "Query report url: rid=" + rid + "url: " + urlList);
         return urlList;
     }
+
+    @Override
+    public int deleteReportByRid(String rid) throws Exception {
+        File file = Paths.get(PathConfig.getPrefixPath(), rid).toAbsolutePath().toFile();
+        if(FileUtil.isDirectory(file)){
+            System.gc();
+            boolean res = FileUtil.del(file);
+            if(res){
+                log.info("[File] Delete report directory: " + file.getAbsolutePath());
+            }
+            return res ? 1 : 0;
+        }else{
+            return 0;
+        }
+    }
 }

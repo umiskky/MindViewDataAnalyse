@@ -14,4 +14,12 @@ public interface ReportService {
      * @throws Exception 异常
      */
     List<String> queryReportUrlByRid(String rid) throws Exception;
+
+    /**
+     * 根据rid删除对应测试报告的文件及文件夹
+     * @param rid String
+     * @return int
+     * @throws Exception 异常
+     */
+    int deleteReportByRid(String rid) throws Exception;
 }

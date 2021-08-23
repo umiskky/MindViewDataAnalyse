@@ -66,6 +66,7 @@
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-generator</artifactId>
             <version>3.4.1</version>
+            <scope>compile</scope>
         </dependency>
 
         <!--lombok-->

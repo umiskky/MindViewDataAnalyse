@@ -24,6 +24,22 @@ public interface PersonnelrecordService extends IService<Personnelrecord> {
     void queryPersonnelRecord(IPage<Personnelrecord> page) throws Exception;
 
     /**
+     * 根据rid删除受试者记录
+     * @param rid 受试者记录id
+     * @return int
+     * @throws Exception 异常
+     */
+    int deletePersonnelRecordByRid(String rid) throws Exception;
+
+    /**
+     * 根据rid删除受试者记录对应的独立数据库
+     * @param rid 受试者记录id
+     * @return int
+     * @throws Exception 异常
+     */
+    int deletePersonnelRecordDataByRid(String rid) throws Exception;
+
+    /**
      * 查询所有pid对应的被试者记录
      * @param pid String
      * @return List<Personnelrecord>

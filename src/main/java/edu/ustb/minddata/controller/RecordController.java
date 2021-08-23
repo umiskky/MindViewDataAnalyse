@@ -13,10 +13,7 @@ import edu.ustb.minddata.service.TestingtimedatasService;
 import edu.ustb.minddata.utils.PageUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author UmiSkky
@@ -76,5 +73,15 @@ public class RecordController {
         Page<Testingeyedatas> page= new PageUtil<Testingeyedatas>(pageIndex, pageSize).getPage();
         testingEyeDataService.queryAllTestingEyeData(page);
         return ResultBody.success(new PageVO<>(page));
+    }
+
+    @DeleteMapping("/record")
+    public ResultBody deleteRecordByRid(@RequestParam String rid) throws Exception{
+        return ResultBody.success(personnelRecordService.deletePersonnelRecordByRid(rid));
+    }
+
+    @DeleteMapping("/record/data")
+    public ResultBody deleteRecordDataByRid(@RequestParam String rid) throws Exception{
+        return ResultBody.success(personnelRecordService.deletePersonnelRecordDataByRid(rid));
     }
 }
