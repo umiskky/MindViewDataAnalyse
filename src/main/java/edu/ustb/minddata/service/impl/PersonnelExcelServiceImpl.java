@@ -159,8 +159,8 @@ public class PersonnelExcelServiceImpl implements PersonnelExcelService {
         // 得到表格索引
         int numberIndex = -1, sexIndex = -1, ageIndex = -1, natureIndex = -1;
         Row headRow = wb.getSheetAt(0).getRow(0);
-        for(int i=headRow.getFirstCellNum(); i<headRow.getLastCellNum(); i++){
-            switch(headRow.getCell(i).getStringCellValue()){
+        for(int i=(headRow != null ? headRow.getFirstCellNum() : 0); i<(headRow != null ? headRow.getLastCellNum() : 0); i++){
+            switch(headRow.getCell(i).getStringCellValue() ){
                 case "number":
                     numberIndex = numberIndex==TABLE_HEAD_NOT_INITIALIZE ? i : TABLE_HEAD_REDUNDANT;
                     break;

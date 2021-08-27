@@ -17,6 +17,8 @@ public class MyWebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/static/**").addResourceLocations("file:///" + Paths.get(PathConfig.getPrefixPath()).toAbsolutePath() + "/");
+        registry.addResourceHandler("/**").addResourceLocations("classpath:/META-INF/static/");
+        registry.addResourceHandler("/favicon.ico").addResourceLocations("classpath:/META-INF/static/");
     }
 
 }

@@ -27,6 +27,6 @@ logging:
     root: info
 
 start:
-  url: http://localhost:18765/swagger-ui/#
+  url: http://localhost:18765/index.html
   enabled: true
   buffer: ./buffer
